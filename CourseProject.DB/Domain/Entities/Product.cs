@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CourseProject.DB.Domain.Entities
 {
-    public class Product
+    internal class Product
     {
         public int Id { get; set; }
         public string Articul { get; set; }
@@ -15,7 +15,7 @@ namespace CourseProject.DB.Domain.Entities
         public decimal RecommendedPrice { get; set; }
         public int Amount { get; set; }
         public string Size { get; set; }
-        public string ForWho { get; set; }
+        public ForWho ForWho { get; set; }
         public string Material { get; set; }
         public string Brand { get; set; }
         public string Maker { get; set; }

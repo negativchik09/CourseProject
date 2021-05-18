@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CourseProject.DB.Domain
 {
-    public class AppDatabaseContext : DbContext
+    internal class AppDatabaseContext : DbContext
     {
         public AppDatabaseContext(DbContextOptions<AppDatabaseContext> options) : base(options) {}
         
