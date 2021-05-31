@@ -8,7 +8,6 @@ namespace CourseProject.DB.Domain
         public AppDatabaseContext(DbContextOptions<AppDatabaseContext> options) : base(options) {}
         
         public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
         public DbSet<Operation> Operations { get; set; }
     }
 }
