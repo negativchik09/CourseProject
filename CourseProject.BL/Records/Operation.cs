@@ -1,13 +1,12 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using CourseProject.DB.Domain;
 
-namespace CourseProject.DB.Domain.Entities
+namespace CourseProject.BL.Records
 {
-    internal class Operation
+    public record Operation
     {
         public int Id { get; set; }
-        [ForeignKey("Articul")]
-        public string ProductArticul { get; set; }
+        public int ProductId { get; set; }
         public OperationType Type { get; set; }
         public int CountDelta { get; set; }
         public decimal UnitPrice { get; set; }

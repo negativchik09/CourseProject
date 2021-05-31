@@ -7,17 +7,17 @@ namespace CourseProject.DB.DTO
     public record OperationDTO
     {
         public int Id { get; init; }
-        public int ProductId { get; init; }
+        public string ProductArticul { get; init; }
         public OperationType Type { get; init; }
         public int CountDelta { get; init; }
         public decimal UnitPrice { get; init; }
-        public DateTime DateTime { get; init; }
+        public DateTime DateTime { get; }
 
         internal Operation Operation =>
             new Operation
             {
                 Id = Id,
-                ProductId = ProductId,
+                ProductArticul = ProductArticul,
                 Type = Type,
                 CountDelta = CountDelta,
                 DateTime = DateTime,
@@ -27,11 +27,16 @@ namespace CourseProject.DB.DTO
         internal OperationDTO(Operation operation)
         {
             Id = operation.Id;
-            ProductId = operation.ProductId;
+            ProductArticul = operation.ProductArticul;
             Type = operation.Type;
             CountDelta = operation.CountDelta;
             DateTime = operation.DateTime;
             UnitPrice = operation.UnitPrice;
+        }
+
+        public OperationDTO()
+        {
+            DateTime = DateTime.Now;
         }
     }
 }
