@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using CourseProject.DB.Domain;
-using CourseProject.DB.Domain.Entities;
+﻿using CourseProject.DB.Domain.Entities;
 
 namespace CourseProject.DB.DTO
 {

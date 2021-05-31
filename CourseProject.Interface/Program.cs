@@ -1,5 +1,4 @@
-﻿using System;
-using CourseProject.DB;
+﻿using CourseProject.DB;
 using CourseProject.Interface.Printers;
 
 namespace CourseProject.Interface

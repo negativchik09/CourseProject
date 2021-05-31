@@ -1,39 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CourseProject.DB.Domain;
-using CourseProject.DB.Domain.Entities;
 using CourseProject.DB.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CourseProject.DB
 {
-    internal class AppDatabaseContextFactory : IDesignTimeDbContextFactory<AppDatabaseContext>
-    {
-        public AppDatabaseContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<AppDatabaseContext>();
-            optionsBuilder.UseSqlServer("Server=tcp:biblibdbserver.database.windows.net,1433;Initial Catalog=Course_Project_Db;Persist Security Info=False;User ID=Negativchik09;Password=SuperPassword123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-
-            return new AppDatabaseContext(optionsBuilder.Options);
-        }
-    }
     public class DatabaseService : IDatabaseService
     {
-        private static AppDatabaseContext _ctx;
+        private class AppDatabaseContextFactory : IDesignTimeDbContextFactory<AppDatabaseContext>
+        {
+            public AppDatabaseContext CreateDbContext(string[] args)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<AppDatabaseContext>();
+                optionsBuilder.UseSqlServer("Server=tcp:biblibdbserver.database.windows.net,1433;Initial Catalog=Course_Project_Db;Persist Security Info=False;User ID=Negativchik09;Password=SuperPassword123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+
+                return new AppDatabaseContext(optionsBuilder.Options);
+            }
+        }
+        private AppDatabaseContext _ctx;
         private static DatabaseService _instance;
-        private DatabaseService() { }
+
+        private DatabaseService()
+        {
+            _ctx = new AppDatabaseContextFactory().CreateDbContext(new string[]{});
+        }
 
         public static DatabaseService Instance => _instance;
 
         static DatabaseService()
         {
             _instance = new DatabaseService();
-            _ctx = new AppDatabaseContextFactory().CreateDbContext(new string[]{""});
         }
 
         public async Task CreateProduct(ProductDTO product)

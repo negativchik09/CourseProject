@@ -32,7 +32,7 @@ namespace CourseProject.Interface.ViewModel
 
         public override string ToString()
         {
-            return $"{Articul}, {Title}, цена: {SellingPrice}, остаток: {Count}";
+            return $"{Articul}, {Title}, цена: {SellingPrice: f2}, остаток: {Count}";
         }
     }
 }

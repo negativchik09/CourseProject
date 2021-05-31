@@ -6,8 +6,6 @@ using CourseProject.DB;
 using CourseProject.DB.Domain;
 using CourseProject.DB.DTO;
 using CourseProject.Interface.ViewModel;
-using static CourseProject.Interface.Enums.ApplicationState;
-using static CourseProject.Interface.Enums.Command;
 
 namespace CourseProject.Interface
 {
@@ -24,17 +22,17 @@ namespace CourseProject.Interface
 
         public void Work()
         {
-            var state = Products;
+            var state = ApplicationState.Products;
             while (true)
             {
                 _printer.Reset();
                 _printer.PrintHeader(); 
                 switch (state)
                 {
-                    case Products:
+                    case ApplicationState.Products:
                         _printer.PrintMainScreen(_db.GetProducts().Select(x => new ProductViewModel(x)));
                         break;
-                    case Operations:
+                    case ApplicationState.Operations:
                         _printer.PrintMainScreen(_db.GetOperations().Select(x => new OperationViewModel(x)));
                         break;
                     default:
@@ -42,7 +40,7 @@ namespace CourseProject.Interface
                 }
                 switch (_printer.GetCommand())
                 {
-                    case CreateProduct:
+                    case Command.CreateProduct:
                         var modelCreating = _printer.GetData(TakeDataType.CreateProduct) as ProductViewModel;
                         _db.CreateProduct(modelCreating.ProductDto).Wait();
                         _db.AddOperation(new OperationDTO
@@ -53,7 +51,7 @@ namespace CourseProject.Interface
                             UnitPrice = modelCreating.Price,
                         }).Wait();
                         break;
-                    case AddProduct:
+                    case Command.AddProduct:
                         var modelAdding = _printer.GetData(TakeDataType.AddProduct) as ProductViewModel;
                         _db.AddProduct(modelAdding.ProductDto).Wait();
                         _db.AddOperation(new OperationDTO
@@ -64,10 +62,10 @@ namespace CourseProject.Interface
                             UnitPrice = modelAdding.Price,
                         }).Wait();
                         break;
-                    case ShowProducts:
-                        state = Products;
+                    case Command.ShowProducts:
+                        state = ApplicationState.Products;
                         break;
-                    case DisposeProduct:
+                    case Command.DisposeProduct:
                         var modelDisposing = _printer.GetData(TakeDataType.DisposeProduct) as ProductViewModel;
                         _db.RemoveProducts(modelDisposing.ProductDto).Wait();
                         _db.AddOperation(new OperationDTO
@@ -78,7 +76,7 @@ namespace CourseProject.Interface
                             Type = OperationType.Dispose
                         }).Wait();
                         break;
-                    case SellProduct:
+                    case Command.SellProduct:
                         var modelSelling = _printer.GetData(TakeDataType.SellProduct) as ProductViewModel;
                         _db.RemoveProducts(modelSelling.ProductDto).Wait();
                         _db.AddOperation(new OperationDTO
@@ -86,13 +84,13 @@ namespace CourseProject.Interface
                             ProductArticul = modelSelling.Articul,
                             UnitPrice = modelSelling.SellingPrice,
                             CountDelta = modelSelling.Count,
-                            Type = OperationType.Dispose
+                            Type = OperationType.Selling
                         }).Wait();
                         break;
-                    case ShowOperations:
-                        state = Operations;
+                    case Command.ShowOperations:
+                        state = ApplicationState.Operations;
                         break;
-                    case Refresh:
+                    case Command.Refresh:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
